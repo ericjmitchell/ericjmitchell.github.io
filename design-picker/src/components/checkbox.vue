@@ -1,6 +1,6 @@
 <template  >
   <div>
-    <v-checkbox :label="dimage.name" v-model="dimage"></v-checkbox>
+    <v-checkbox :label="dimage.name" v-model="dimage.visibility"></v-checkbox>
     <!--<input type="checkbox" :id="dimage.id" 
     :checked="dimage.visibility"
     @change="toggleVisibility({dimage:dimage})"

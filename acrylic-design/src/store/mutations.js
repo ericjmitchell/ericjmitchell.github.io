@@ -1,7 +1,8 @@
 import imagesJson from './images.json'
 
 export const state = {
-  dimages: imagesJson.reverse() || '[]'
+  dimages: imagesJson.reverse() || '[]',
+  imageWidth: 720
 }
 
 export const mutations = {
@@ -20,5 +21,9 @@ export const mutations = {
 
   getDImage (state, { imageId }) {
     return state.dimages.find(function (item) { return item.imageId === imageId })
+  },
+
+  setImageWidth (state, { width }) {
+    state.imageWidth = width
   }
 }

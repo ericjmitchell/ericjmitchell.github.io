@@ -1,5 +1,5 @@
 <template  >
-  <img v-if="visibility" :id="imageId" :src="desk" :width="iWidth" :height="iHeight" :style="style"/>
+  <img v-if="visibility" :id="imageId" :src="desk" :width="imageWidth" :height="imageHeight"/>
 </template>
 
 
@@ -17,8 +17,11 @@ export default {
     desk () {
       return require('../assets/desk/' + this.source)
     },
-    style () {
-      return 'left: 100px'
+    imageWidth () {
+      return this.$store.state.imageWidth
+    },
+    imageHeight () {
+      return this.imageWidth / 5
     }
   }
 }

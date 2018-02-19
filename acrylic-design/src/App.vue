@@ -6,9 +6,12 @@
       <v-spacer></v-spacer>
     </v-toolbar>
     <v-content>
+      <v-container class="mx-auto">
+      <v-slider class="slider mx-auto" v-model="sliderModel.imageWidth" step="20" ticks max="1780" min="360" thumb-label></v-slider>
       <div class="relative mx-auto" id="images">
       <dimage v-bind="item" v-for="(item) in dimages" :key="item.imageId"></dimage>
       </div>
+      </v-container>
       <v-container>
         <v-expansion-panel>
           <v-expansion-panel-content>
@@ -87,18 +90,19 @@
 </template>
 
 <script>
-// import { mapMutations } from 'vuex'
 import dimage from './components/image.vue'
 import dcheckbox from './components/checkbox.vue'
 
 export default {
   data () {
     return {
-      fixed: false,
       title: 'Acrylic Design'
     }
   },
   computed: {
+    sliderModel () {
+      return this.$store.state
+    },
     dimages () {
       return this.$store.state.dimages
     },
@@ -160,11 +164,16 @@ export default {
 </script>
 
 <style scoped>
+
+.slider {
+  width: 1000px;
+}
 .relative {
   position: relative;
 }
 #images {
-  width: 720px;
-  height: 144px;
+  margin: 50px;
+  height: 356px;
+  width: 1780px;
 }
 </style>

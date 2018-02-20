@@ -618,8 +618,14 @@
     "iHeight": 144, "visibility": false
   },
   {
-    "imageId": "stargate-inner_desk", "name": "stargate inner",
-    "source": "stargate-inner_desk.png",
+    "imageId": "stargate-inner-white_desk", "name": "stargate inner white",
+    "source": "stargate-inner-white_desk.png",
+    "iWidth": 720,
+    "iHeight": 144, "visibility": false
+  },
+  {
+    "imageId": "stargate-inner-black_desk", "name": "stargate inner black",
+    "source": "stargate-inner-black_desk.png",
     "iWidth": 720,
     "iHeight": 144, "visibility": false
   },

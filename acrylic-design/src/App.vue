@@ -1,9 +1,11 @@
 <template>
   <v-app>
     <v-toolbar app>
-      <v-spacer></v-spacer>
       <v-toolbar-title v-text="title"></v-toolbar-title>
       <v-spacer></v-spacer>
+      <v-btn v-on:click="saveclick">Save</v-btn>
+      <file-select v-model="file"></file-select>
+      <v-btn v-on:click="loadclick">Load</v-btn>
     </v-toolbar>
     <v-content>
       <v-container class="mx-auto">
@@ -85,6 +87,8 @@
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-container>
+      <v-text-field name="comments" label="Comments" multi-line class="textBox mx-auto" v-model="comments">
+      </v-text-field>
     </v-content>
   </v-app>
 </template>
@@ -92,11 +96,15 @@
 <script>
 import dimage from './components/image.vue'
 import dcheckbox from './components/checkbox.vue'
+import FileSaver from 'file-saver'
+import FileSelect from './components/fileselector.vue'
 
 export default {
   data () {
     return {
-      title: 'Acrylic Design'
+      title: 'Acrylic Design',
+      file: null,
+      comments: 'test'
     }
   },
   computed: {
@@ -158,13 +166,45 @@ export default {
   name: 'AcrylicDesign',
   components: {
     dimage,
-    dcheckbox
+    dcheckbox,
+    FileSelect
+  },
+  methods: {
+    saveclick: function (event) {
+      let file = { images: this.$store.state.dimages.filter(item => item.visibility).map(item => item.imageId), comments: this.comments }
+      let blob = new Blob([JSON.stringify(file)], {type: 'text/plain;charset=utf-8'})
+      FileSaver.saveAs(blob, 'acrylic-design.json')
+    },
+    loadclick: function (event) {
+      if (this.file) {
+        let commentUpdater = this.updateComments
+        let state = this.$store.state
+        let reader = new FileReader()
+        reader.addEventListener('load', function (e) {
+          let fileData = JSON.parse(e.target.result)
+          // reset visibility
+          state.dimages.forEach(item => {
+            item.visibility = false
+          })
+          fileData.images.forEach(element => {
+            state.dimages.find(item => item.imageId === element).visibility = true
+          })
+          commentUpdater(fileData.comments)
+        })
+        reader.readAsText(this.file)
+      }
+    },
+    updateComments: function (words) {
+      this.comments = words
+    }
   }
 }
 </script>
 
 <style scoped>
-
+.textBox {
+  width: 1000px;
+}
 .slider {
   width: 1000px;
 }
